@@ -86,8 +86,16 @@ async function main() {
     );
 
     if (existing) {
+        const currentTime = DateTime.fromISO(existing.startDate).toMillis();
+        const desiredTime = DateTime.fromISO(date).toMillis();
+
+        if (currentTime === desiredTime) 
+		{
+			console.log(title, "UNCHANGED");
+			continue;
+        }
         const response = await fetch(
-        `https://api.ticktick.com/open/v1/task/${existing.id}`,
+		`https://api.ticktick.com/open/v1/task/${existing.id}`,
         {
             method: "POST",
             headers: {
